@@ -1,10 +1,11 @@
+/*
+Original author: Ben Marshall
+Source repository: https://github.com/ben-marshall/uart
+License: MIT
 
-// 
-// Module: uart_rx 
-// 
-// Notes:
-// - UART reciever module.
-//
+Note: I have used Ben Marshall's project to provide UART functionality for my other FPGA projects.
+No significant changes have been made to the original author's implementation.
+*/
 
 module uart_rx(
 input  wire       clk          , // Top level system clock input.
