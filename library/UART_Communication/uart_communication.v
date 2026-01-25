@@ -1,3 +1,12 @@
+/*
+Original author: Ben Marshall
+Source repository: https://github.com/ben-marshall/uart
+License: MIT
+
+Note: I have used Ben Marshall's project to provide UART functionality for my other FPGA projects.
+No significant changes have been made to the original author's implementation.
+*/
+
 module uart_communication #(
     parameter CLK_HZ = 50000000,
     parameter BIT_RATE = 9600,
