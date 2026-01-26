@@ -13,10 +13,10 @@ These modules are configured for the Intel Cyclone IV EP4CE6E22C8N FPGA on the [
 
 | Signal Group | Signal Name | FPGA Pin | Description |
 | :--- | :--- | :--- | :--- |
-| **System** | `sys_clk` | **PIN_23** | 50MHz On-board Oscillator |
-| | `sys_rst_n` | **PIN_25** | Active Low Reset Button (Key 4) |
-| **UART** | `uart_rx` | **PIN_114** | Serial Receive (USB-TTL) |
-| | `uart_tx` | **PIN_115** | Serial Transmit (USB-TTL) |
+| **System** | `sys_clk` | **PIN_23** | 50MHz On-board Clock |
+| | `rst` | **PIN_25** | Active Low Reset Button |
+| **UART** | `uart_rx` | **PIN_114** | Serial Receive |
+| | `uart_tx` | **PIN_115** | Serial Transmit |
 | **Display** | `seg_led[0]` (A) | **PIN_128** | 7-Segment Cathode A |
 | | `seg_led[1]` (B) | **PIN_121** | 7-Segment Cathode B |
 | | `seg_led[2]` (C) | **PIN_125** | 7-Segment Cathode C |
@@ -54,5 +54,5 @@ PuTTY is used for serial communication - [PuTTY download](https://www.chiark.gre
 * **Speed:** `9600`
 * **Flow Control:** `None`
 
-## Credit
+## Credits
 - [UART_Communication](library/UART_Communication) implements Ben Marshall's [uart repository](https://github.com/ben-marshall/uart/tree/master).
