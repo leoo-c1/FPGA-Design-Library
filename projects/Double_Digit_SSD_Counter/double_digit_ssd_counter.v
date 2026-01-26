@@ -1,3 +1,7 @@
+/*
+This module counts up to 99 seconds, incrementing once per second and displaying time across two SSDs.
+*/
+
 module double_digit_ssd_counter (
     input        clk,      // PIN_23 (50MHz)
     input        rst,     // PIN_25 (RESET)
@@ -78,5 +82,6 @@ module double_digit_ssd_counter (
         .input_bits(input_bits),
         .segments(segments)
     );
+
 
 endmodule
