@@ -4,7 +4,7 @@ module uart_full_ssd_display (
 
     input wire uart_rxd,        // Received data
     output wire uart_txd,       // Transmitted data
-    output reg [6:0] segments,  // SSD segments to activate
+    output wire [6:0] segments,  // SSD segments to activate
     output reg [3:0] dig_sel,   // SSD digit to select
     output reg dash             // Whether or not to show a dash on the SSDs
     );
@@ -26,19 +26,22 @@ module uart_full_ssd_display (
 
     always @ (posedge clk) begin
         if (dig_update == 4'b0001) begin            // If we are showing the first digit
-            if (uart_rx_valid)                      // If we received a UART byte
+            if (uart_rx_valid) begin                // If we received a UART byte
                 input_bits <= bottom_rx_data;       // Show the bottom of the UART byte
-                dash <= 1'b0;                       // Don't show a dash
-            else                                    // If we haven't received a byte yet
+                dash <= 1'b0;
+
+            end else                                // Don't show a dash                                  // If we haven't received a byte yet
                 dash <= 1'b1;                       // Show the dash
 
             dig_sel <= dig_update;
             dig_update <= 4'b0010;                  // Switch to the second digit
+
         end else if (dig_update == 4'b0010) begin   // If we are showing the second digit
-            if (uart_rx_valid)                      // If we received a UART byte
-                input_bits <= top_rx_data;       // Show the bottom of the UART byte
+            if (uart_rx_valid) begin                // If we received a UART byte
+                input_bits <= top_rx_data;          // Show the bottom of the UART byte
                 dash <= 1'b0;                       // Don't show a dash
-            else                                    // If we haven't received a byte yet
+
+            end else                                // If we haven't received a byte yet
                 dash <= 1'b1;                       // Show the dash
 
             dig_sel <= dig_update;
