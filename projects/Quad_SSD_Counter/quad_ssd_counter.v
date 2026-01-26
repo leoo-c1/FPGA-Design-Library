@@ -1,3 +1,8 @@
+/*
+This module is for an SSD counter that displays elapsed time with 10 millisecond accuracy.
+It counts up to 99.99 seconds before resetting.
+*/
+
 module quad_ssd_counter (
     input        clk,      // PIN_23 (50MHz)
     input        rst,     // PIN_25 (RESET)
@@ -123,5 +128,6 @@ module quad_ssd_counter (
         .input_bits(input_bits),
         .segments(segments)
     );
+
 
 endmodule
