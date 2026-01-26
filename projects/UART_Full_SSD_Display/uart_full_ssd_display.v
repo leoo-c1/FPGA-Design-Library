@@ -20,12 +20,12 @@ module uart_full_ssd_display (
     assign bottom_rx_data = uart_rx_data[PAYLOAD_BITS-5:0];
     assign top_rx_data = uart_rx_data[PAYLOAD_BITS-1:PAYLOAD_BITS-4];
 
-    reg [3:0] dig_update = 4'b0001;         // Digit 1 is initially on
+    reg [3:0] dig_update = 4'b1110;         // Digit 1 is initially on
     reg [3:0] input_bits;
     reg       dash;                         // Whether or not to show a dash on the SSDs
 
     always @ (posedge clk) begin
-        if (dig_update == 4'b0001) begin            // If we are showing the first digit
+        if (dig_update == 4'b1101) begin            // If we are showing the first digit
             if (uart_rx_valid) begin                // If we received a UART byte
                 input_bits <= bottom_rx_data;       // Show the bottom of the UART byte
                 dash <= 1'b0;
@@ -34,9 +34,9 @@ module uart_full_ssd_display (
                 dash <= 1'b1;                       // Show the dash
 
             dig_sel <= dig_update;
-            dig_update <= 4'b0010;                  // Switch to the second digit
+            dig_update <= 4'b1101;                  // Switch to the second digit
 
-        end else if (dig_update == 4'b0010) begin   // If we are showing the second digit
+        end else if (dig_update == 4'b1101) begin   // If we are showing the second digit
             if (uart_rx_valid) begin                // If we received a UART byte
                 input_bits <= top_rx_data;          // Show the bottom of the UART byte
                 dash <= 1'b0;                       // Don't show a dash
@@ -45,9 +45,9 @@ module uart_full_ssd_display (
                 dash <= 1'b1;                       // Show the dash
 
             dig_sel <= dig_update;
-            dig_update <= 4'b0001;                  // Switch to the first digit
+            dig_update <= 4'b1110;                  // Switch to the first digit
         end else begin                              // Catch-all case
-            dig_update <= 4'b0001;                  // Switch to the first digit
+            dig_update <= 4'b1110;                  // Switch to the first digit
             dig_sel <= dig_update;
         end
     end
