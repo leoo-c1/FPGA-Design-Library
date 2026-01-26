@@ -1,8 +1,8 @@
-/db
-/incremental_db
-/output_files
-/simulation
-/greybox_tmp
+db/
+incremental_db/
+output_files/
+simulation/
+greybox_tmp/
 /hc_output
 /.qsys_edit
 *.qws
@@ -28,3 +28,4 @@
 *.jdi
 *.rbf
 *.bak
+Guide.txt
