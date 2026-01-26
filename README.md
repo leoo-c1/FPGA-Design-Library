@@ -31,7 +31,7 @@ These modules are configured for the Intel Cyclone IV EP4CE6E22C8N FPGA on the [
 | | `dig_sel[3]` | **PIN_137** | Digit 4 Select (Active Low) |
 
 ### UART Communication Interface
-To communicate with the board via UART, an external USB-to-Serial converter is used. The FPGA logic voltage is 3.3V, so the adapter must be configured correctly to avoid damaging the pins (on the 
+To communicate with the board via UART, an external USB-to-Serial converter is used. The FPGA logic voltage is 3.3V, so the adapter must be configured correctly to avoid damaging the pins (on the XC4464, the onboard switch can be set to 3.3V to achieve this).
 
 **Hardware Adapter:**\
 [Duinotech Arduino Compatible USB to Serial Adaptor (XC4464)](https://www.jaycar.com.au/duinotech-arduino-compatible-usb-to-serial-adaptor/p/XC4464) | [XC4464 Manual](https://media.jaycar.com.au/product/resources/XC4464_manualMain_74523.pdf)
