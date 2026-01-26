@@ -1,3 +1,8 @@
+/*
+This module displays the bottom 4 bits of a byte sent via UART on a single SSD.
+This allows us to display numbers 0-9 that can be sent from a laptop.
+*/
+
 module uart_ssd_display (
     input        clk,      // PIN_23 (50MHz)
     input        rst,     // PIN_88 (KEY1 - Reset)
@@ -34,5 +39,6 @@ module uart_ssd_display (
         .segments(segments),
         .dig_sel(dig_sel)
     );
+
 
 endmodule
