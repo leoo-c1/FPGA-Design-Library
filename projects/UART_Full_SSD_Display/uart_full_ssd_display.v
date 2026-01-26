@@ -4,8 +4,8 @@ module uart_full_ssd_display (
 
     input wire uart_rxd,        // Received data
     output wire uart_txd,       // Transmitted data
-    output wire [6:0] segments,  // SSD segments to activate
-    output reg [3:0] dig_sel,   // SSD digit to select
+    output wire [6:0] segments, // SSD segments to activate
+    output reg [3:0] dig_sel    // SSD digit to select
     );
 
     parameter PAYLOAD_BITS = 8;
