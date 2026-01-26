@@ -1,3 +1,8 @@
+/*
+This module receives a byte via UART, then returns the same byte to the source (like an echo).
+This can be used for debugging UART functionality.
+*/
+
 module uart_echo (
     input        clk,      // PIN_23 (50MHz)
     input        rst,     // PIN_88 (KEY1 - Reset)
@@ -21,5 +26,6 @@ module uart_echo (
         .uart_rx_data(uart_rx_data),
         .uart_rx_valid(uart_rx_valid)
     );
+
 
 endmodule
