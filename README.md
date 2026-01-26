@@ -8,7 +8,6 @@ A library of resuable Verilog modules and projects for FPGA development.
 
 ## Target Hardware
 These modules are configured for the Intel Cyclone IV EP4CE6E22C8N FPGA on the [RZ-EasyFPGA A2.2 / RZ-EP4CE6-WX board](https://web.archive.org/web/20210128152708/http://rzrd.net/product/?79_502.html) by Ruizhi Technology Co, but can be reused for a variety of boards.\
-\
 
 ### Pinout Configuration
 
