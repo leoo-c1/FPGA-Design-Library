@@ -30,5 +30,29 @@ These modules are configured for the Intel Cyclone IV EP4CE6E22C8N FPGA on the [
 | | `dig_sel[2]` | **PIN_136** | Digit 3 Select (Active Low) |
 | | `dig_sel[3]` | **PIN_137** | Digit 4 Select (Active Low) |
 
+### UART Communication Interface
+To communicate with the board via UART, an external USB-to-Serial converter is used. The FPGA logic voltage is 3.3V, so the adapter must be configured correctly to avoid damaging the pins (on the 
+
+**Hardware Adapter:**\
+[Duinotech Arduino Compatible USB to Serial Adaptor (XC4464)](https://www.jaycar.com.au/duinotech-arduino-compatible-usb-to-serial-adaptor/p/XC4464) | [XC4464 Manual](https://media.jaycar.com.au/product/resources/XC4464_manualMain_74523.pdf)
+> **Important:** Ensure the voltage selection switch on the adapter is set to 3.3V. Do not connect the 5V pin.
+
+| Adapter Pin | FPGA Pin | Description |
+| :--- | :--- | :--- |
+| **GND** | **GND** | Common Ground |
+| **CTS** | **N/C** | **Do Not Connect** |
+| **5V** | **N/C** | **Do Not Connect** |
+| **TXD** | **PIN_114** | Serial Transmit (Connects to FPGA `uart_rx`) |
+| **RXD** | **PIN_115** | Serial Receive (Connects to FPGA `uart_tx`) |
+| **DTR** | **N/C** | **Do Not Connect** |
+
+**Terminal Setup**
+We use PuTTY for serial communication - [PuTTY download](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+
+* **Connection Type:** `Serial`
+* **Serial Line:** `COM3` (Note: Check Device Manager as this may vary)
+* **Speed:** `9600`
+* **Flow Control:** `None`
+
 ## Credit
 - [UART_Communication](library/UART_Communication) implements Ben Marshall's [uart repository](https://github.com/ben-marshall/uart/tree/master).
