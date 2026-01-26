@@ -6,7 +6,6 @@ module uart_full_ssd_display (
     output wire uart_txd,       // Transmitted data
     output wire [6:0] segments,  // SSD segments to activate
     output reg [3:0] dig_sel,   // SSD digit to select
-    output reg dash             // Whether or not to show a dash on the SSDs
     );
 
     parameter PAYLOAD_BITS = 8;
@@ -23,6 +22,7 @@ module uart_full_ssd_display (
 
     reg [3:0] dig_update = 4'b0001;         // Digit 1 is initially on
     reg [3:0] input_bits;
+    reg       dash;                         // Whether or not to show a dash on the SSDs
 
     always @ (posedge clk) begin
         if (dig_update == 4'b0001) begin            // If we are showing the first digit
