@@ -9,21 +9,50 @@ module uart_full_ssd_display (
     );
 
     parameter PAYLOAD_BITS = 8;
-    parameter max_count_sel = 416_667;      // Clock prescaler for 60Hz digit switching
+    parameter max_sel_count = 416_667;      // Clock prescaler for 60Hz digit switching
 
     wire [PAYLOAD_BITS-1:0] uart_rx_data;   // Holds the byte we just heard
     wire                    uart_rx_valid;  // Pulses when a byte arrives
 
-    wire [PAYLOAD_BITS-5:0] bottom_rx_data; // The bottom 4 bits of the UART byte
-    wire [PAYLOAD_BITS-5:0] top_rx_data;    // The top 4 bits of the UART byte
-
-    assign bottom_rx_data = uart_rx_data[PAYLOAD_BITS-5:0];
-    assign top_rx_data = uart_rx_data[PAYLOAD_BITS-1:PAYLOAD_BITS-4];
+    reg [3:0] bottom_rx_data;               // The bottom 4 bits of the UART byte
+    reg [3:0] top_rx_data;                  // The top 4 bits of the UART byte
 
     reg [3:0] dig_update = 4'b1110;         // Digit 1 is initially on
     reg [3:0] input_bits;
-    reg       dash;                         // Whether or not to show a dash on the SSDs
+    reg       dash = 1'b1;                  // Whether or not to show a dash on the SSDs (initially yes)
+    reg [18:0] sel_counter = 0;             // Counter for digit switching
 
+    // UART byte receiving
+    always @ (posedge clk) begin
+        if (uart_rx_valid) begin
+            bottom_rx_data <= uart_rx_data[3:0];
+            top_rx_data <= uart_rx_data[7:4];
+            dash <= 1'b0;
+        end
+    end
+
+    // Digit selection and SSD display
+    always @ (posedge clk) begin
+        if (sel_counter >= max_sel_count) begin
+            sel_counter <= 0;
+            if (dig_update == 4'b1110) begin            // If we are showing the first digit
+                input_bits <= bottom_rx_data;           // Show the bottom of the UART byte
+                dig_sel <= dig_update;
+                dig_update <= 4'b1101;                  // Switch to the second digit
+
+            end else if (dig_update == 4'b1101) begin   // If we are showing the second digit
+                input_bits <= top_rx_data;              // Show the bottom of the UART byte
+                dig_sel <= dig_update;
+                dig_update <= 4'b1110;                  // Switch to the first digit
+            end else begin                              // Catch-all case
+                dig_update <= 4'b1110;                  // Switch to the first digit
+                dig_sel <= dig_update;
+            end
+        end else
+            sel_counter <= sel_counter + 1;
+    end
+
+    /*
     always @ (posedge clk) begin
         if (dig_update == 4'b1110) begin            // If we are showing the first digit
             if (uart_rx_valid) begin                // If we received a UART byte
@@ -51,6 +80,7 @@ module uart_full_ssd_display (
             dig_sel <= dig_update;
         end
     end
+    */
 
     // Instantiation of uart logic
     uart_communication uart_logic (
