@@ -10,6 +10,7 @@ module uart_full_ssd_display (
 
     parameter PAYLOAD_BITS = 8;
     parameter max_sel_count = 416_667;      // Clock prescaler for 60Hz digit switching
+    parameter STARTUP_WAIT = 50_000_000;    // 1 second wait after starting the program
 
     wire [PAYLOAD_BITS-1:0] uart_rx_data;   // Holds the byte we just heard
     wire                    uart_rx_valid;  // Pulses when a byte arrives
@@ -21,10 +22,14 @@ module uart_full_ssd_display (
     reg [3:0] input_bits;
     reg       dash = 1'b1;                  // Whether or not to show a dash on the SSDs (initially yes)
     reg [18:0] sel_counter = 0;             // Counter for digit switching
+    reg [25:0] startup_counter = 0;
 
     // UART byte receiving
     always @ (posedge clk) begin
-        if (uart_rx_valid) begin
+        if (startup_counter < STARTUP_WAIT) begin
+            startup_counter <= startup_counter + 1;
+            dash <= 1'b1;
+        end else if (uart_rx_valid) begin
             bottom_rx_data <= uart_rx_data[3:0];
             top_rx_data <= uart_rx_data[7:4];
             dash <= 1'b0;
