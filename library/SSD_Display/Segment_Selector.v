@@ -1,6 +1,6 @@
 module Segment_Selector (
     input wire [3:0] input_bits,    // 4 bits we send to the SSD
-    input wire dash;                // Flag to indicate if we want to show a single dash on the SSD
+    input wire dash,                // Flag to indicate if we want to show a single dash on the SSD
     output wire [6:0] segments      // SSD segments that get activated
     );
 
