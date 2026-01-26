@@ -29,10 +29,14 @@ module uart_full_ssd_display (
         if (startup_counter < STARTUP_WAIT) begin
             startup_counter <= startup_counter + 1;
             dash <= 1'b1;
-        end else if (uart_rx_valid) begin
-            bottom_rx_data <= uart_rx_data[3:0];
-            top_rx_data <= uart_rx_data[7:4];
-            dash <= 1'b0;
+        end else if (rst) begin                     // If one second has passed and no reset signal
+            if (uart_rx_valid) begin
+                bottom_rx_data <= uart_rx_data[3:0];
+                top_rx_data <= uart_rx_data[7:4];
+                dash <= 1'b0;
+            end
+        end else if (~rst) begin                    // If we press the reset button, show dashes
+            dash <= 1'b1;
         end
     end
 
@@ -56,36 +60,6 @@ module uart_full_ssd_display (
         end else
             sel_counter <= sel_counter + 1;
     end
-
-    /*
-    always @ (posedge clk) begin
-        if (dig_update == 4'b1110) begin            // If we are showing the first digit
-            if (uart_rx_valid) begin                // If we received a UART byte
-                input_bits <= bottom_rx_data;       // Show the bottom of the UART byte
-                dash <= 1'b0;
-
-            end else                                // Don't show a dash                                  // If we haven't received a byte yet
-                dash <= 1'b1;                       // Show the dash
-
-            dig_sel <= dig_update;
-            dig_update <= 4'b1101;                  // Switch to the second digit
-
-        end else if (dig_update == 4'b1101) begin   // If we are showing the second digit
-            if (uart_rx_valid) begin                // If we received a UART byte
-                input_bits <= top_rx_data;          // Show the bottom of the UART byte
-                dash <= 1'b0;                       // Don't show a dash
-
-            end else                                // If we haven't received a byte yet
-                dash <= 1'b1;                       // Show the dash
-
-            dig_sel <= dig_update;
-            dig_update <= 4'b1110;                  // Switch to the first digit
-        end else begin                              // Catch-all case
-            dig_update <= 4'b1110;                  // Switch to the first digit
-            dig_sel <= dig_update;
-        end
-    end
-    */
 
     // Instantiation of uart logic
     uart_communication uart_logic (
