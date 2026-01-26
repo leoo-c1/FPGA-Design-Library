@@ -25,7 +25,7 @@ module uart_full_ssd_display (
     reg       dash;                         // Whether or not to show a dash on the SSDs
 
     always @ (posedge clk) begin
-        if (dig_update == 4'b1101) begin            // If we are showing the first digit
+        if (dig_update == 4'b1110) begin            // If we are showing the first digit
             if (uart_rx_valid) begin                // If we received a UART byte
                 input_bits <= bottom_rx_data;       // Show the bottom of the UART byte
                 dash <= 1'b0;
