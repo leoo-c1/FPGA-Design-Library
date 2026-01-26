@@ -1,28 +1,32 @@
-module ButtonBuzzerVerilog (
-    input wire clk,       // Your 50MHz crystal oscillator
-    input wire btn_1,			// Button 1
-	 input wire btn_2,			// Button 2
-	 input wire btn_3,			// Button 3
-	 input wire btn_4,			// Button 4
-    output reg buzzer     // The pin connected to the buzzer
-);
+/*
+This module allows users to play the main riff from 'Smoke on the Water' by Deep Purple on a buzzer.
+Buttons 1-4 are assigned to guitar frets 0,3,5 and 6 respectively.
+The main riff is 0-3-5 | 0-3-6-5 | 0-3-5 | 3-0
+*/
 
+module ButtonBuzzerVerilog (
+	input wire clk,				// 50MHz clock signal
+    input wire btn_1,			// Button 1
+	input wire btn_2,			// Button 2
+	input wire btn_3,			// Button 3
+	input wire btn_4,			// Button 4
+    output reg buzzer     		// The pin connected to the buzzer
+);
+	
     // We need a container to store the count for the low E (requires 19 bits)
     reg [18:0] counter_0th;
 	 
-	 // Do the rest for the other frets (only require 18 bits)
-	 reg [17:0] counter_3rd;
-	 reg [17:0] counter_5th;
-	 reg [17:0] counter_6th;
+	// Do the rest for the other frets (only require 18 bits)
+	reg [17:0] counter_3rd;
+	reg [17:0] counter_5th;
+	reg [17:0] counter_6th;
 	 
-	 localparam count_0 = 303361;
-	 localparam count_3 = 255095;
-	 localparam count_5 = 227264;
-	 localparam count_6 = 214509;
+	localparam count_0 = 303361;
+	localparam count_3 = 255095;
+	localparam count_5 = 227264;
+	localparam count_6 = 214509;
 
-    // This block runs perfectly aligned with the rising edge of the 50MHz clock
     always @(posedge clk) begin
-	 
 	 // 1. Check if we press only button 1
         if (btn_1 == 0 && btn_2 == 1 && btn_3 == 1 && btn_4 == 1) begin
             // 2. Check if we reached the count for the low E
@@ -76,6 +80,6 @@ module ButtonBuzzerVerilog (
 			end else begin
 				buzzer <= 0;
 			end
-    end
+	end
 
 endmodule
