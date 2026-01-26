@@ -47,7 +47,7 @@ To communicate with the board via UART, an external USB-to-Serial converter is u
 | **DTR** | **N/C** | **Do Not Connect** |
 
 **Terminal Setup**
-We use PuTTY for serial communication - [PuTTY download](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+PuTTY is used for serial communication - [PuTTY download](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 
 * **Connection Type:** `Serial`
 * **Serial Line:** `COM3` (Note: Check Device Manager as this may vary)
