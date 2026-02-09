@@ -55,4 +55,4 @@ PuTTY is used for serial communication - [PuTTY download](https://www.chiark.gre
 * **Flow Control:** `None`
 
 ## Credits
-- [UART_Communication](library/UART_Communication) implements Ben Marshall's [uart repository](https://github.com/ben-marshall/uart/tree/master).
+- [UART_Communication](library/UART_Communication) implements Ben Marshall's [UART repository](https://github.com/ben-marshall/uart/tree/master).
